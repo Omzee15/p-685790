@@ -40,15 +40,13 @@ const Hero = () => {
   
   return (
     <section 
-      className="overflow-hidden relative bg-cover" 
+      className="overflow-hidden relative bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200" 
       id="hero" 
       style={{
-        backgroundImage: 'url("/Header-background.webp")',
-        backgroundPosition: 'center 30%', 
         padding: isMobile ? '100px 12px 40px' : '120px 20px 60px'
       }}
     >
-      <div className="absolute -top-[10%] -right-[5%] w-1/2 h-[70%] bg-pulse-gradient opacity-20 blur-3xl rounded-full"></div>
+      <div className="absolute -top-[10%] -right-[5%] w-1/2 h-[70%] bg-gradient-to-br from-blue-400/20 to-blue-600/20 opacity-30 blur-3xl rounded-full"></div>
       
       <div className="container px-4 sm:px-6 lg:px-8" ref={containerRef}>
         <div className="max-w-4xl mx-auto text-center">
@@ -56,7 +54,7 @@ const Hero = () => {
             className="pulse-chip mb-3 sm:mb-6 opacity-0 animate-fade-in mx-auto" 
             style={{ animationDelay: "0.1s" }}
           >
-            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-600 text-white mr-2">01</span>
             <span>Innovations for a safer tomorrow</span>
           </div>
           
@@ -69,7 +67,7 @@ const Hero = () => {
           
           <p 
             style={{ animationDelay: "0.5s" }} 
-            className="section-subtitle mt-3 sm:mt-6 mb-4 sm:mb-8 leading-relaxed opacity-0 animate-fade-in text-gray-950 font-normal text-base sm:text-lg"
+            className="section-subtitle mt-3 sm:mt-6 mb-4 sm:mb-8 leading-relaxed opacity-0 animate-fade-in text-gray-800 font-normal text-base sm:text-lg"
           >
             Accelerating investigations and intelligence using AI. Redefining trust in an AI-first world.
           </p>
@@ -78,19 +76,19 @@ const Hero = () => {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 opacity-0 animate-fade-in" 
             style={{ animationDelay: "0.7s" }}
           >
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+            <div className="bg-white/40 backdrop-blur-sm rounded-xl p-4 border border-blue-200/50">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Accelerating investigations</h3>
               <p className="text-sm text-gray-700">Using AI</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+            <div className="bg-white/40 backdrop-blur-sm rounded-xl p-4 border border-blue-200/50">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Intelligence</h3>
               <p className="text-sm text-gray-700">Redefining trust</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+            <div className="bg-white/40 backdrop-blur-sm rounded-xl p-4 border border-blue-200/50">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">AI-first world</h3>
               <p className="text-sm text-gray-700">Innovation</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+            <div className="bg-white/40 backdrop-blur-sm rounded-xl p-4 border border-blue-200/50">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Trust</h3>
               <p className="text-sm text-gray-700">Safer tomorrow</p>
             </div>
@@ -102,25 +100,14 @@ const Hero = () => {
           >
             <a 
               href="#products" 
-              className="flex items-center justify-center group w-full sm:w-auto text-center" 
-              style={{
-                backgroundColor: '#FE5C02',
-                borderRadius: '1440px',
-                boxSizing: 'border-box',
-                color: '#FFFFFF',
-                cursor: 'pointer',
-                fontSize: '14px',
-                lineHeight: '20px',
-                padding: '16px 24px',
-                border: '1px solid white',
-              }}
+              className="flex items-center justify-center group w-full sm:w-auto text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-4 px-6 rounded-full transition-all duration-300 border border-blue-700"
             >
               Explore Products
               <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a 
               href="#contact" 
-              className="flex items-center justify-center w-full sm:w-auto text-center bg-white/20 backdrop-blur-sm border border-white/30 text-gray-900 font-medium py-4 px-6 rounded-full transition-all duration-300 hover:bg-white/30"
+              className="flex items-center justify-center w-full sm:w-auto text-center bg-white/30 backdrop-blur-sm border border-blue-300 text-gray-900 font-medium py-4 px-6 rounded-full transition-all duration-300 hover:bg-white/50"
             >
               Contact Us
             </a>
@@ -128,7 +115,7 @@ const Hero = () => {
         </div>
       </div>
       
-      <div className="hidden lg:block absolute bottom-0 left-1/4 w-64 h-64 bg-pulse-100/30 rounded-full blur-3xl -z-10 parallax" data-speed="0.05"></div>
+      <div className="hidden lg:block absolute bottom-0 left-1/4 w-64 h-64 bg-blue-300/20 rounded-full blur-3xl -z-10 parallax" data-speed="0.05"></div>
     </section>
   );
 };
