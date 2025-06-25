@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
@@ -32,11 +33,12 @@ const Hero = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobile]);
   return <section className="overflow-hidden relative bg-cover" id="hero" style={{
-    backgroundImage: 'url("/Header-background.webp")',
-    backgroundPosition: 'center 30%',
+    backgroundImage: 'url("/lovable-uploads/4ca8370f-4028-457d-8ef2-e139bdb140b1.png")',
+    backgroundPosition: 'center center',
+    backgroundSize: 'cover',
     padding: isMobile ? '100px 12px 40px' : '120px 20px 60px'
   }}>
-      <div className="absolute -top-[10%] -right-[5%] w-1/2 h-[70%] bg-pulse-gradient opacity-20 blur-3xl rounded-full"></div>
+      <div className="absolute -top-[10%] -right-[5%] w-1/2 h-[70%] bg-blue-500/20 opacity-30 blur-3xl rounded-full"></div>
       
       <div className="container px-4 sm:px-6 lg:px-8" ref={containerRef}>
         <div className="max-w-4xl mx-auto text-center">
@@ -50,27 +52,27 @@ const Hero = () => {
           
           <p style={{
           animationDelay: "0.5s"
-        }} className="section-subtitle mt-3 sm:mt-6 mb-4 sm:mb-8 leading-relaxed opacity-0 animate-fade-in text-gray-950 font-normal text-base sm:text-lg">
+        }} className="section-subtitle mt-3 sm:mt-6 mb-4 sm:mb-8 leading-relaxed opacity-0 animate-fade-in text-white font-normal text-base sm:text-lg">
         </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 opacity-0 animate-fade-in" style={{
           animationDelay: "0.7s"
         }}>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Accelerating investigations</h3>
-              <p className="text-sm text-gray-700">Using AI</p>
+              <h3 className="text-lg font-semibold text-white mb-2">Accelerating investigations</h3>
+              <p className="text-sm text-white/80">Using AI</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Intelligence</h3>
-              <p className="text-sm text-gray-700">Redefining trust</p>
+              <h3 className="text-lg font-semibold text-white mb-2">Intelligence</h3>
+              <p className="text-sm text-white/80">Redefining trust</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">AI-first world</h3>
-              <p className="text-sm text-gray-700">Innovation</p>
+              <h3 className="text-lg font-semibold text-white mb-2">AI-first world</h3>
+              <p className="text-sm text-white/80">Innovation</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Trust</h3>
-              <p className="text-sm text-gray-700">Safer tomorrow</p>
+              <h3 className="text-lg font-semibold text-white mb-2">Trust</h3>
+              <p className="text-sm text-white/80">Safer tomorrow</p>
             </div>
           </div>
           
@@ -91,14 +93,14 @@ const Hero = () => {
               Explore Products
               <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
             </a>
-            <a href="#contact" className="flex items-center justify-center w-full sm:w-auto text-center bg-white/20 backdrop-blur-sm border border-white/30 text-gray-900 font-medium py-4 px-6 rounded-full transition-all duration-300 hover:bg-white/30">
+            <a href="#contact" className="flex items-center justify-center w-full sm:w-auto text-center bg-white/20 backdrop-blur-sm border border-white/30 text-white font-medium py-4 px-6 rounded-full transition-all duration-300 hover:bg-white/30">
               Contact Us
             </a>
           </div>
         </div>
       </div>
       
-      <div className="hidden lg:block absolute bottom-0 left-1/4 w-64 h-64 bg-pulse-100/30 rounded-full blur-3xl -z-10 parallax" data-speed="0.05"></div>
+      <div className="hidden lg:block absolute bottom-0 left-1/4 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -z-10 parallax" data-speed="0.05"></div>
     </section>;
 };
 export default Hero;

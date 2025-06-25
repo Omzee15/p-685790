@@ -55,7 +55,7 @@ const Navbar = () => {
           aria-label="Pi-Labs"
         >
           <img 
-            src="/lovable-uploads/ddcc5ea3-82f4-43a4-81fc-349521291ed2.png" 
+            src="/lovable-uploads/6b028f50-7d3c-4fc2-8b8e-16aa44df0892.png" 
             alt="Pi-Labs Logo" 
             className="h-7 sm:h-8" 
           />
