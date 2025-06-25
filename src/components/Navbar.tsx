@@ -52,11 +52,11 @@ const Navbar = () => {
             e.preventDefault();
             scrollToTop();
           }}
-          aria-label="Pulse Robot"
+          aria-label="Pi-Labs"
         >
           <img 
-            src="/logo.svg" 
-            alt="Pulse Robot Logo" 
+            src="/lovable-uploads/ddcc5ea3-82f4-43a4-81fc-349521291ed2.png" 
+            alt="Pi-Labs Logo" 
             className="h-7 sm:h-8" 
           />
         </a>
@@ -73,8 +73,9 @@ const Navbar = () => {
           >
             Home
           </a>
-          <a href="#features" className="nav-link">About</a>
-          <a href="#details" className="nav-link">Contact</a>
+          <a href="#products" className="nav-link">Products</a>
+          <a href="#industries" className="nav-link">Industries</a>
+          <a href="#contact" className="nav-link">Contact</a>
         </nav>
 
         {/* Mobile menu button - increased touch target */}
@@ -106,17 +107,27 @@ const Navbar = () => {
             Home
           </a>
           <a 
-            href="#features" 
+            href="#products" 
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
             onClick={() => {
               setIsMenuOpen(false);
               document.body.style.overflow = '';
             }}
           >
-            About
+            Products
           </a>
           <a 
-            href="#details" 
+            href="#industries" 
+            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+            onClick={() => {
+              setIsMenuOpen(false);
+              document.body.style.overflow = '';
+            }}
+          >
+            Industries
+          </a>
+          <a 
+            href="#contact" 
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
             onClick={() => {
               setIsMenuOpen(false);
