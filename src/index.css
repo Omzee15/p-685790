@@ -221,3 +221,22 @@
   transform: translateY(var(--parallax-y, 0));
   transition: transform 0.1s ease-out;
 }
+
+/* Infinite scroll animation for carousel */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+/* Pause animation on hover */
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
