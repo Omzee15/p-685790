@@ -2,14 +2,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
+import LottieAnimation from "./LottieAnimation";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const vantaRef = useRef(null);
-  const vantaEffect = useRef(null);
-  const logoRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const [lottieData, setLottieData] = useState<any>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     // Check if mobile on mount and when window resizes
@@ -24,140 +23,161 @@ const Hero = () => {
   }, []);
 
   useEffect(() => {
-    // Handle scroll for logo animation
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    fetch('/loop-header.lottie')
+      .then(response => response.json())
+      .then(data => setLottieData(data))
+      .catch(error => console.error("Error loading Lottie animation:", error));
   }, []);
 
   useEffect(() => {
-    // Initialize Vanta.js background
-    if (!vantaEffect.current && vantaRef.current) {
-      vantaEffect.current = (window as any).VANTA.NET({
-        el: vantaRef.current,
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.00,
-        minWidth: 200.00,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        color: 0x3355ff,
-        backgroundColor: 0xffffff,
-        points: 15.00,
-        maxDistance: 20.00,
-        spacing: 18.00
-      });
+    // Skip effect on mobile
+    if (isMobile) return;
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current || !imageRef.current) return;
+      
+      const {
+        left,
+        top,
+        width,
+        height
+      } = containerRef.current.getBoundingClientRect();
+      const x = (e.clientX - left) / width - 0.5;
+      const y = (e.clientY - top) / height - 0.5;
+
+      imageRef.current.style.transform = `perspective(1000px) rotateY(${x * 2.5}deg) rotateX(${-y * 2.5}deg) scale3d(1.02, 1.02, 1.02)`;
+    };
+    
+    const handleMouseLeave = () => {
+      if (!imageRef.current) return;
+      imageRef.current.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)`;
+    };
+    
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("mousemove", handleMouseMove);
+      container.addEventListener("mouseleave", handleMouseLeave);
     }
+    
     return () => {
-      if (vantaEffect.current) {
-        vantaEffect.current.destroy();
+      if (container) {
+        container.removeEventListener("mousemove", handleMouseMove);
+        container.removeEventListener("mouseleave", handleMouseLeave);
       }
     };
-  }, []);
-
-  // Calculate logo transform based on scroll
-  const getLogoTransform = () => {
-    const maxScroll = 300; // Distance to complete the animation
-    const progress = Math.min(scrollY / maxScroll, 1);
+  }, [isMobile]);
+  
+  useEffect(() => {
+    // Skip parallax on mobile
+    if (isMobile) return;
     
-    // Logo shrinks from h-40 (160px) to h-8 (32px)
-    const initialSize = 160;
-    const finalSize = 32;
-    const currentSize = initialSize - (initialSize - finalSize) * progress;
-    
-    // Calculate exact position to land in header
-    // Header height is approximately 64px (py-4), logo should be centered in header
-    const headerHeight = 64;
-    const logoFinalY = headerHeight / 2; // Center of header from top
-    
-    // Move logo from center to exact header position
-    const viewportHeight = window.innerHeight;
-    const startY = (viewportHeight / 2) - 150; // Starting position (moved higher up from -60 to -120)
-    const endY = logoFinalY; // Final position in header
-    const currentY = startY - (startY - endY) * progress;
-    
-    // Opacity for other content
-    const contentOpacity = Math.max(0, 1 - progress * 2);
-    
-    return {
-      size: currentSize,
-      currentY,
-      contentOpacity,
-      logoOpacity: scrollY < maxScroll ? 1 : 0, // Hide when fully scrolled
-      showInHeader: scrollY >= maxScroll // Show in header when animation complete
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const elements = document.querySelectorAll('.parallax');
+      elements.forEach(el => {
+        const element = el as HTMLElement;
+        const speed = parseFloat(element.dataset.speed || '0.1');
+        const yPos = -scrollY * speed;
+        element.style.setProperty('--parallax-y', `${yPos}px`);
+      });
     };
-  };
-
-  const { size, currentY, contentOpacity, logoOpacity, showInHeader } = getLogoTransform();
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isMobile]);
   
   return (
     <section 
-      ref={vantaRef}
-      className="overflow-hidden relative flex items-center justify-center" 
+      className="overflow-hidden relative bg-cover" 
       id="hero" 
       style={{
-        minHeight: '100vh'
+        backgroundImage: 'url("/Header-background.webp")',
+        backgroundPosition: 'center 30%', 
+        padding: isMobile ? '100px 12px 40px' : '120px 20px 60px'
       }}
     >
-      <div className="container px-4 sm:px-6 lg:px-8 relative z-10 py-8" ref={containerRef}>
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Animated Logo */}
-          <div 
-            ref={logoRef}
-            className="fixed left-1/2 z-50 transition-all duration-300 ease-out"
-            style={{
-              top: `${currentY}px`, // Exact position from top of viewport
-              transform: `translateX(-50%)`, // Only center horizontally
-              opacity: logoOpacity,
-              pointerEvents: scrollY > 200 ? 'none' : 'auto'
-            }}
-          >
-            <img 
-              src="/pilabs-dark copy.svg" 
-              alt="Pi-Labs" 
-              style={{ 
-                height: `${size}px`,
-                width: 'auto',
-                transition: 'all 0.3s ease-out'
-              }}
-            />
-          </div>
-
-          {/* Action buttons with fade animation */}
-          <div style={{ opacity: contentOpacity, transition: 'opacity 0.3s ease-out' }}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-60">
+      <div className="absolute -top-[10%] -right-[5%] w-1/2 h-[70%] bg-pulse-gradient opacity-20 blur-3xl rounded-full"></div>
+      
+      <div className="container px-4 sm:px-6 lg:px-8" ref={containerRef}>
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center">
+          <div className="w-full lg:w-1/2">
+            <div 
+              className="pulse-chip mb-3 sm:mb-6 opacity-0 animate-fade-in" 
+              style={{ animationDelay: "0.1s" }}
+            >
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
+              <span>Purpose</span>
+            </div>
+            
+            <h1 
+              className="section-title text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tight opacity-0 animate-fade-in" 
+              style={{ animationDelay: "0.3s" }}
+            >
+              Atlas: Where Code<br className="hidden sm:inline" />Meets Motion
+            </h1>
+            
+            <p 
+              style={{ animationDelay: "0.5s" }} 
+              className="section-subtitle mt-3 sm:mt-6 mb-4 sm:mb-8 leading-relaxed opacity-0 animate-fade-in text-gray-950 font-normal text-base sm:text-lg text-left"
+            >
+              The humanoid companion that learns and adapts alongside you.
+            </p>
+            
+            <div 
+              className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-in" 
+              style={{ animationDelay: "0.7s" }}
+            >
               <a 
-                href="#products" 
+                href="#get-access" 
                 className="flex items-center justify-center group w-full sm:w-auto text-center" 
                 style={{
-                  backgroundColor: '#3355FF',
+                  backgroundColor: '#FE5C02',
                   borderRadius: '1440px',
                   boxSizing: 'border-box',
                   color: '#FFFFFF',
                   cursor: 'pointer',
                   fontSize: '14px',
                   lineHeight: '20px',
-                  padding: '16px 24px',
+                  padding: '16px 24px', // Slightly reduced padding for mobile
                   border: '1px solid white',
                 }}
               >
-                Explore Products
+                Request Access
                 <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </a>
-              <a 
-                href="#contact" 
-                className="flex items-center justify-center w-full sm:w-auto text-center bg-white/20 backdrop-blur-sm border border-white/30 text-gray-900 font-medium py-4 px-6 rounded-full transition-all duration-300 hover:bg-white/30"
-              >
-                Contact Us
               </a>
             </div>
           </div>
+          
+          <div className="w-full lg:w-1/2 relative mt-6 lg:mt-0">
+            {lottieData ? (
+              <div className="relative z-10 animate-fade-in" style={{ animationDelay: "0.9s" }}>
+                <LottieAnimation 
+                  animationPath={lottieData} 
+                  className="w-full h-auto max-w-lg mx-auto"
+                  loop={true}
+                  autoplay={true}
+                />
+              </div>
+            ) : (
+              <>
+              <div className="absolute inset-0 bg-dark-900 rounded-2xl sm:rounded-3xl -z-10 shadow-xl"></div>
+              <div className="relative transition-all duration-500 ease-out overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl">
+                <img 
+                  ref={imageRef} 
+                  src="/lovable-uploads/5663820f-6c97-4492-9210-9eaa1a8dc415.png" 
+                  alt="Atlas Robot" 
+                  className="w-full h-auto object-cover transition-transform duration-500 ease-out" 
+                  style={{ transformStyle: 'preserve-3d' }} 
+                />
+                <div className="absolute inset-0" style={{ backgroundImage: 'url("/hero-image.jpg")', backgroundSize: 'cover', backgroundPosition: 'center', mixBlendMode: 'overlay', opacity: 0.5 }}></div>
+              </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
+      
+      <div className="hidden lg:block absolute bottom-0 left-1/4 w-64 h-64 bg-pulse-100/30 rounded-full blur-3xl -z-10 parallax" data-speed="0.05"></div>
     </section>
   );
 };
