@@ -1,6 +1,7 @@
 
 import React from "react";
 import { ArrowRight, Shield, Video, Database, Lock, Mic } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ProductsSection = () => {
   const products = [
@@ -104,10 +105,13 @@ const ProductsSection = () => {
                     {product.description}
                   </p>
                   
-                  <button className="inline-flex items-center px-6 py-3 bg-white text-gray-800 rounded-full font-medium hover:bg-gray-50 transition-all duration-300 shadow-md hover:shadow-lg border border-gray-200 group-hover:translate-y-[-2px]">
+                  <Link 
+                    to={product.href}
+                    className="inline-flex items-center px-6 py-3 bg-white text-gray-800 rounded-full font-medium hover:bg-gray-50 transition-all duration-300 shadow-md hover:shadow-lg border border-gray-200 group-hover:translate-y-[-2px]"
+                  >
                     LEARN MORE 
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  </Link>
                 </div>
                 
                 {product.image && (
@@ -142,10 +146,13 @@ const ProductsSection = () => {
                     {product.description}
                   </p>
                   
-                  <button className="inline-flex items-center px-6 py-3 bg-white text-gray-800 rounded-full font-medium hover:bg-gray-50 transition-all duration-300 shadow-md hover:shadow-lg border border-gray-200 group-hover:translate-y-[-2px]">
+                  <Link 
+                    to={product.href}
+                    className="inline-flex items-center px-6 py-3 bg-white text-gray-800 rounded-full font-medium hover:bg-gray-50 transition-all duration-300 shadow-md hover:shadow-lg border border-gray-200 group-hover:translate-y-[-2px]"
+                  >
                     LEARN MORE 
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  </Link>
                 </div>
                 
                 {product.image && (

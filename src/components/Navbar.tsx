@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -50,7 +51,8 @@ const Navbar = () => {
       document.body.style.overflow = '';
     }
   };
-  return <header className={cn("fixed top-0 left-0 right-0 z-50 py-4 sm:py-5 md:py-6 transition-all duration-300", isScrolled ? "bg-[#F8FAFC]/95 backdrop-blur-md shadow-sm" : "bg-transparent")}>
+  return (
+    <header className={cn("fixed top-0 left-0 right-0 z-50 py-4 sm:py-5 md:py-6 transition-all duration-300", isScrolled ? "bg-[#F8FAFC]/95 backdrop-blur-md shadow-sm" : "bg-transparent")}>
       <div className="container flex items-center justify-center px-4 sm:px-6 lg:px-8 relative">
         {/* Desktop Navigation - Split layout with logo in center */}
         <nav className="hidden md:flex items-center justify-center relative w-full mt-2">
@@ -62,13 +64,10 @@ const Navbar = () => {
               marginRight: headerLogoOpacity > 0 ? '24px' : '16px' // Reduced initial spacing
             }}
           >
-            <a href="#" className="nav-link mr-6" onClick={e => {
-            e.preventDefault();
-            scrollToTop();
-          }}>
+            <Link to="/" className="nav-link mr-6" onClick={scrollToTop}>
               Home
-            </a>
-            <a href="#products" className="nav-link">Products</a>
+            </Link>
+            <Link to="/products" className="nav-link">Products</Link>
           </div>
           
           {/* Logo in center - properly centered */}
@@ -110,34 +109,43 @@ const Navbar = () => {
       {/* Mobile Navigation - improved for better touch experience */}
       <div className={cn("fixed inset-0 z-40 bg-white flex flex-col pt-16 px-6 md:hidden transition-all duration-300 ease-in-out", isMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none")}>
         <nav className="flex flex-col space-y-8 items-center mt-8">
-          <a href="#" className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" onClick={e => {
-          e.preventDefault();
-          scrollToTop();
-          setIsMenuOpen(false);
-          document.body.style.overflow = '';
-        }}>
+          <Link 
+            to="/" 
+            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+            onClick={() => {
+              scrollToTop();
+              setIsMenuOpen(false);
+              document.body.style.overflow = '';
+            }}
+          >
             Home
-          </a>
-          <a href="#products" className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" onClick={() => {
-          setIsMenuOpen(false);
-          document.body.style.overflow = '';
-        }}>
+          </Link>
+          <Link 
+            to="/products" 
+            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+            onClick={() => {
+              setIsMenuOpen(false);
+              document.body.style.overflow = '';
+            }}
+          >
             Products
-          </a>
+          </Link>
           <a href="#industries" className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" onClick={() => {
-          setIsMenuOpen(false);
-          document.body.style.overflow = '';
-        }}>
+            setIsMenuOpen(false);
+            document.body.style.overflow = '';
+          }}>
             Industries
           </a>
           <a href="#contact" className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" onClick={() => {
-          setIsMenuOpen(false);
-          document.body.style.overflow = '';
-        }}>
+            setIsMenuOpen(false);
+            document.body.style.overflow = '';
+          }}>
             Contact
           </a>
         </nav>
       </div>
-    </header>;
+    </header>
+  );
 };
+
 export default Navbar;
