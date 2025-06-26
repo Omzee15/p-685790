@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import PiLabsImpact from "@/components/PiLabsImpact";
 import ProductsSection from "@/components/ProductsSection";
 import IndustriesSection from "@/components/IndustriesSection";
+import HumanoidSection from "@/components/HumanoidSection";
 import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
@@ -63,6 +64,7 @@ const Index = () => {
         <PiLabsImpact />
         <ProductsSection />
         <IndustriesSection />
+        <HumanoidSection />
         <Features />
         <Testimonials />
       </main>

@@ -1,35 +1,8 @@
 
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Shield, Building, AlertTriangle, Lock, Monitor, Zap } from "lucide-react";
 
 const IndustriesSection = () => {
-  const vantaRef = useRef(null);
-  const vantaEffect = useRef(null);
-
-  useEffect(() => {
-    if (!vantaEffect.current && vantaRef.current) {
-      vantaEffect.current = (window as any).VANTA.NET({
-        el: vantaRef.current,
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.00,
-        minWidth: 200.00,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        color: 0x3355ff,
-        backgroundColor: 0xf8fafc,
-        points: 20.00,
-        maxDistance: 19.00,
-        spacing: 15.00
-      });
-    }
-    return () => {
-      if (vantaEffect.current) {
-        vantaEffect.current.destroy();
-      }
-    };
-  }, []);
   const industries = [
     {
       title: "Law Enforcement Agencies",
@@ -65,10 +38,15 @@ const IndustriesSection = () => {
 
   return (
     <section 
-      ref={vantaRef}
-      className="py-12 sm:py-16 md:py-20 relative" 
+      className="py-12 sm:py-16 md:py-20 relative bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100" 
       id="industries"
     >
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-100 rounded-full opacity-30 blur-3xl"></div>
+        <div className="absolute bottom-0 -left-24 w-80 h-80 bg-purple-100 rounded-full opacity-20 blur-3xl"></div>
+      </div>
+      
       <div className="section-container opacity-0 animate-on-scroll relative z-10">
         <div className="text-center mb-12">
           <h2 className="section-title mb-6">Industries we serve</h2>
