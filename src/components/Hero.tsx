@@ -5,8 +5,6 @@ import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const vantaRef = useRef(null);
-  const vantaEffect = useRef(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [scrollY, setScrollY] = useState(0);
@@ -31,32 +29,6 @@ const Hero = () => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    // Initialize Vanta.js background
-    if (!vantaEffect.current && vantaRef.current) {
-      vantaEffect.current = (window as any).VANTA.NET({
-        el: vantaRef.current,
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.00,
-        minWidth: 200.00,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        color: 0x3355ff,
-        backgroundColor: 0xffffff,
-        points: 15.00,
-        maxDistance: 20.00,
-        spacing: 18.00
-      });
-    }
-    return () => {
-      if (vantaEffect.current) {
-        vantaEffect.current.destroy();
-      }
-    };
   }, []);
 
   // Calculate logo transform based on scroll
@@ -96,13 +68,19 @@ const Hero = () => {
   
   return (
     <section 
-      ref={vantaRef}
-      className="overflow-hidden relative flex items-center justify-center" 
+      className="overflow-hidden relative flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50" 
       id="hero" 
       style={{
         minHeight: '100vh'
       }}
     >
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-200 rounded-full opacity-20 blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 -left-24 w-80 h-80 bg-purple-200 rounded-full opacity-15 blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-pink-200 rounded-full opacity-10 blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+      </div>
+
       <div className="container px-4 sm:px-6 lg:px-8 relative z-10 py-8" ref={containerRef}>
         <div className="max-w-4xl mx-auto text-center">
           {/* Animated Logo */}
