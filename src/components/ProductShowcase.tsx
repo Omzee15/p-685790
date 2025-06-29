@@ -78,8 +78,11 @@ const ProductShowcase = () => {
     }
   ];
 
+  const selectedProductData = selectedProduct ? products.find(p => p.id === selectedProduct) : null;
+  const otherProducts = selectedProduct ? products.filter(p => p.id !== selectedProduct) : products;
+
   const handleCardClick = (productId: number) => {
-    setSelectedProduct(selectedProduct === productId ? null : productId);
+    setSelectedProduct(productId);
   };
 
   const handleClose = () => {
@@ -93,129 +96,164 @@ const ProductShowcase = () => {
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-50 rounded-full opacity-30 blur-3xl translate-x-1/3 translate-y-1/3"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-pulse-100 text-pulse-600 text-sm font-medium mb-6">
-            Our Solutions
+        {!selectedProduct && (
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-pulse-100 text-pulse-600 text-sm font-medium mb-6">
+              Our Solutions
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Our products
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Advanced AI-powered solutions for forensics, security, and intelligence operations
+            </p>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            Our products
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Advanced AI-powered solutions for forensics, security, and intelligence operations
-          </p>
-        </div>
+        )}
 
-        {/* Products Grid */}
-        <div className="relative">
+        {/* Normal Grid View */}
+        {!selectedProduct && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product) => (
-              <div key={product.id} className="relative">
-                {/* Product Card */}
-                <div 
-                  className={`${product.bgColor} ${product.borderColor} rounded-3xl p-6 relative overflow-hidden cursor-pointer transition-all duration-500 shadow-lg hover:shadow-xl border-2 ${
-                    selectedProduct === product.id ? 'scale-105 z-20' : 'hover:scale-[1.02]'
-                  }`}
-                  onClick={() => handleCardClick(product.id)}
-                >
-                  <div className="relative z-10">
-                    <div className="flex items-center mb-4">
-                      <div className={`flex items-center justify-center w-10 h-10 rounded-xl bg-white shadow-md mr-3`}>
-                        {React.createElement(product.icon, { className: `w-5 h-5 ${product.accentColor}` })}
-                      </div>
-                      <span className={`text-xl font-bold ${product.accentColor}`}>{product.name}</span>
+              <div 
+                key={product.id}
+                className={`${product.bgColor} ${product.borderColor} rounded-3xl p-6 relative overflow-hidden cursor-pointer transition-all duration-500 shadow-lg hover:shadow-xl border-2 hover:scale-[1.02]`}
+                onClick={() => handleCardClick(product.id)}
+              >
+                <div className="relative z-10">
+                  <div className="flex items-center mb-4">
+                    <div className={`flex items-center justify-center w-10 h-10 rounded-xl bg-white shadow-md mr-3`}>
+                      {React.createElement(product.icon, { className: `w-5 h-5 ${product.accentColor}` })}
                     </div>
-                    
-                    <h3 className="text-lg font-semibold text-gray-800 mb-3 leading-tight">
-                      {product.title}
-                    </h3>
-                    
-                    <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                      {product.description}
-                    </p>
-
-                    {selectedProduct !== product.id && (
-                      <div className="text-sm text-gray-500 font-medium">
-                        Click to explore →
-                      </div>
-                    )}
+                    <span className={`text-xl font-bold ${product.accentColor}`}>{product.name}</span>
                   </div>
                   
-                  {product.image && (
-                    <div className="absolute top-4 right-4 w-16 h-16 opacity-20 transition-opacity">
-                      <img src={product.image} alt="" className="w-full h-full object-contain" />
-                    </div>
-                  )}
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3 leading-tight">
+                    {product.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                    {product.description}
+                  </p>
+
+                  <div className="text-sm text-gray-500 font-medium">
+                    Click to explore →
+                  </div>
                 </div>
-
-                {/* Expanded Content */}
-                {selectedProduct === product.id && (
-                  <div className="absolute inset-0 z-30 animate-fade-in">
-                    <div className={`${product.bgColor} ${product.borderColor} rounded-3xl p-8 shadow-2xl border-2 h-full`}>
-                      <div className="relative h-full flex flex-col">
-                        {/* Close Button */}
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleClose();
-                          }}
-                          className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors"
-                        >
-                          <X className="w-4 h-4 text-gray-600" />
-                        </button>
-
-                        <div className="flex items-center mb-6">
-                          <div className={`flex items-center justify-center w-12 h-12 rounded-xl bg-white shadow-md mr-4`}>
-                            {React.createElement(product.icon, { className: `w-6 h-6 ${product.accentColor}` })}
-                          </div>
-                          <span className={`text-2xl font-bold ${product.accentColor}`}>{product.name}</span>
-                        </div>
-                        
-                        <h3 className="text-xl font-semibold text-gray-800 mb-4 leading-tight">
-                          {product.title}
-                        </h3>
-                        
-                        <p className="text-gray-700 text-sm mb-6 leading-relaxed flex-grow">
-                          {product.detailedDescription}
-                        </p>
-
-                        {/* Features */}
-                        <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-800 mb-3">Key Features:</h4>
-                          <ul className="space-y-2">
-                            {product.features.map((feature, index) => (
-                              <li key={index} className="flex items-center text-xs text-gray-600">
-                                <div className={`w-1.5 h-1.5 rounded-full ${product.accentColor.replace('text-', 'bg-')} mr-2`}></div>
-                                {feature}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        
-                        <Link 
-                          to={product.href}
-                          className="inline-flex items-center justify-center px-8 py-3 bg-white text-gray-800 rounded-full font-medium hover:bg-gray-50 transition-all duration-300 shadow-md hover:shadow-lg border border-gray-200 w-full"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          EXPLORE MORE 
-                          <ArrowRight className="ml-2 w-4 h-4" />
-                        </Link>
-                      </div>
-                    </div>
+                
+                {product.image && (
+                  <div className="absolute top-4 right-4 w-16 h-16 opacity-20 transition-opacity">
+                    <img src={product.image} alt="" className="w-full h-full object-contain" />
                   </div>
                 )}
               </div>
             ))}
           </div>
-        </div>
-      </div>
+        )}
 
-      {/* Overlay */}
-      {selectedProduct !== null && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-20 z-10"
-          onClick={handleClose}
-        />
-      )}
+        {/* Full Screen Expanded View */}
+        {selectedProduct && selectedProductData && (
+          <div className="fixed inset-0 z-50 bg-white">
+            {/* Close Button */}
+            <button 
+              onClick={handleClose}
+              className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors z-60"
+            >
+              <X className="w-6 h-6 text-gray-600" />
+            </button>
+
+            <div className="flex h-full">
+              {/* Main Expanded Product */}
+              <div className="flex-1 relative overflow-hidden">
+                <div className={`${selectedProductData.bgColor} h-full flex items-center justify-center relative`}>
+                  {/* Background Image */}
+                  {selectedProductData.image && (
+                    <div className="absolute inset-0 opacity-10">
+                      <img 
+                        src={selectedProductData.image} 
+                        alt={selectedProductData.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  
+                  {/* Content */}
+                  <div className="relative z-10 max-w-2xl mx-auto px-8 text-center">
+                    <div className="inline-flex items-center justify-center mb-8">
+                      <div className={`flex items-center justify-center w-20 h-20 rounded-2xl bg-white shadow-lg mr-6`}>
+                        {React.createElement(selectedProductData.icon, { className: `w-10 h-10 ${selectedProductData.accentColor}` })}
+                      </div>
+                      <div className="text-left">
+                        <h1 className={`text-4xl font-bold ${selectedProductData.accentColor} mb-2`}>
+                          {selectedProductData.name}
+                        </h1>
+                        <p className="text-gray-600 text-lg">
+                          {selectedProductData.title}
+                        </p>
+                      </div>
+                    </div>
+
+                    <p className="text-gray-700 text-lg mb-8 leading-relaxed">
+                      {selectedProductData.detailedDescription}
+                    </p>
+
+                    {/* Features */}
+                    <div className="mb-8">
+                      <h3 className="text-xl font-semibold text-gray-800 mb-4">Key Features</h3>
+                      <div className="flex flex-wrap justify-center gap-4">
+                        {selectedProductData.features.map((feature, index) => (
+                          <span 
+                            key={index}
+                            className="px-4 py-2 bg-white rounded-full text-sm font-medium text-gray-700 shadow-md"
+                          >
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Link 
+                      to={selectedProductData.href}
+                      className="inline-flex items-center justify-center px-12 py-4 bg-white text-gray-800 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                    >
+                      EXPLORE MORE 
+                      <ArrowRight className="ml-3 w-5 h-5" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Side Panel with Other Products */}
+              <div className="w-80 bg-gray-50 border-l border-gray-200 overflow-y-auto p-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-6">Other Products</h3>
+                <div className="space-y-4">
+                  {otherProducts.map((product) => (
+                    <div 
+                      key={product.id}
+                      className={`${product.bgColor} ${product.borderColor} rounded-2xl p-4 cursor-pointer transition-all duration-300 hover:shadow-md border`}
+                      onClick={() => handleCardClick(product.id)}
+                    >
+                      <div className="flex items-center mb-3">
+                        <div className={`flex items-center justify-center w-8 h-8 rounded-lg bg-white shadow-sm mr-3`}>
+                          {React.createElement(product.icon, { className: `w-4 h-4 ${product.accentColor}` })}
+                        </div>
+                        <span className={`text-sm font-bold ${product.accentColor}`}>{product.name}</span>
+                      </div>
+                      
+                      <h4 className="text-sm font-medium text-gray-800 mb-2 leading-tight">
+                        {product.title}
+                      </h4>
+                      
+                      <p className="text-xs text-gray-600 leading-relaxed">
+                        {product.description.slice(0, 80)}...
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   );
 };
