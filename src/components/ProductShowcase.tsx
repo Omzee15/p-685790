@@ -90,13 +90,13 @@ const ProductShowcase = () => {
   };
 
   return (
-    <section className="py-20 sm:py-24 md:py-28 bg-white relative overflow-hidden" id="products">
-      {/* Background decorations */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-blue-50 rounded-full opacity-40 blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-50 rounded-full opacity-30 blur-3xl translate-x-1/3 translate-y-1/3"></div>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {!selectedProduct && (
+    <>
+      <section className="py-20 sm:py-24 md:py-28 bg-white relative overflow-hidden" id="products">
+        {/* Background decorations */}
+        <div className="absolute top-0 left-0 w-72 h-72 bg-blue-50 rounded-full opacity-40 blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-50 rounded-full opacity-30 blur-3xl translate-x-1/3 translate-y-1/3"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-pulse-100 text-pulse-600 text-sm font-medium mb-6">
               Our Solutions
@@ -108,10 +108,8 @@ const ProductShowcase = () => {
               Advanced AI-powered solutions for forensics, security, and intelligence operations
             </p>
           </div>
-        )}
 
-        {/* Normal Grid View */}
-        {!selectedProduct && (
+          {/* Products Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product) => (
               <div 
@@ -148,113 +146,113 @@ const ProductShowcase = () => {
               </div>
             ))}
           </div>
-        )}
+        </div>
+      </section>
 
-        {/* Full Screen Expanded View */}
-        {selectedProduct && selectedProductData && (
-          <div className="fixed inset-0 z-50 bg-white">
-            {/* Close Button */}
-            <button 
-              onClick={handleClose}
-              className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors z-60"
-            >
-              <X className="w-6 h-6 text-gray-600" />
-            </button>
+      {/* Full Screen Expanded View - Rendered as Portal */}
+      {selectedProduct && selectedProductData && (
+        <div className="fixed inset-0 z-[9999] bg-white">
+          {/* Close Button */}
+          <button 
+            onClick={handleClose}
+            className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors z-[10000]"
+          >
+            <X className="w-6 h-6 text-gray-600" />
+          </button>
 
-            <div className="flex h-full">
-              {/* Main Expanded Product */}
-              <div className="flex-1 relative overflow-hidden">
-                <div className={`${selectedProductData.bgColor} h-full flex items-center justify-center relative`}>
-                  {/* Background Image */}
-                  {selectedProductData.image && (
-                    <div className="absolute inset-0 opacity-10">
-                      <img 
-                        src={selectedProductData.image} 
-                        alt={selectedProductData.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
-                  
-                  {/* Content */}
-                  <div className="relative z-10 max-w-2xl mx-auto px-8 text-center">
-                    <div className="inline-flex items-center justify-center mb-8">
-                      <div className={`flex items-center justify-center w-20 h-20 rounded-2xl bg-white shadow-lg mr-6`}>
-                        {React.createElement(selectedProductData.icon, { className: `w-10 h-10 ${selectedProductData.accentColor}` })}
-                      </div>
-                      <div className="text-left">
-                        <h1 className={`text-4xl font-bold ${selectedProductData.accentColor} mb-2`}>
-                          {selectedProductData.name}
-                        </h1>
-                        <p className="text-gray-600 text-lg">
-                          {selectedProductData.title}
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-700 text-lg mb-8 leading-relaxed">
-                      {selectedProductData.detailedDescription}
-                    </p>
-
-                    {/* Features */}
-                    <div className="mb-8">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-4">Key Features</h3>
-                      <div className="flex flex-wrap justify-center gap-4">
-                        {selectedProductData.features.map((feature, index) => (
-                          <span 
-                            key={index}
-                            className="px-4 py-2 bg-white rounded-full text-sm font-medium text-gray-700 shadow-md"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <Link 
-                      to={selectedProductData.href}
-                      className="inline-flex items-center justify-center px-12 py-4 bg-white text-gray-800 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-                    >
-                      EXPLORE MORE 
-                      <ArrowRight className="ml-3 w-5 h-5" />
-                    </Link>
+          <div className="flex h-full">
+            {/* Main Expanded Product */}
+            <div className="flex-1 relative overflow-hidden">
+              <div className={`${selectedProductData.bgColor} h-full flex items-center justify-center relative`}>
+                {/* Background Image */}
+                {selectedProductData.image && (
+                  <div className="absolute inset-0 opacity-10">
+                    <img 
+                      src={selectedProductData.image} 
+                      alt={selectedProductData.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                </div>
-              </div>
-
-              {/* Side Panel with Other Products */}
-              <div className="w-80 bg-gray-50 border-l border-gray-200 overflow-y-auto p-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-6">Other Products</h3>
-                <div className="space-y-4">
-                  {otherProducts.map((product) => (
-                    <div 
-                      key={product.id}
-                      className={`${product.bgColor} ${product.borderColor} rounded-2xl p-4 cursor-pointer transition-all duration-300 hover:shadow-md border`}
-                      onClick={() => handleCardClick(product.id)}
-                    >
-                      <div className="flex items-center mb-3">
-                        <div className={`flex items-center justify-center w-8 h-8 rounded-lg bg-white shadow-sm mr-3`}>
-                          {React.createElement(product.icon, { className: `w-4 h-4 ${product.accentColor}` })}
-                        </div>
-                        <span className={`text-sm font-bold ${product.accentColor}`}>{product.name}</span>
-                      </div>
-                      
-                      <h4 className="text-sm font-medium text-gray-800 mb-2 leading-tight">
-                        {product.title}
-                      </h4>
-                      
-                      <p className="text-xs text-gray-600 leading-relaxed">
-                        {product.description.slice(0, 80)}...
+                )}
+                
+                {/* Content */}
+                <div className="relative z-10 max-w-2xl mx-auto px-8 text-center">
+                  <div className="inline-flex items-center justify-center mb-8">
+                    <div className={`flex items-center justify-center w-20 h-20 rounded-2xl bg-white shadow-lg mr-6`}>
+                      {React.createElement(selectedProductData.icon, { className: `w-10 h-10 ${selectedProductData.accentColor}` })}
+                    </div>
+                    <div className="text-left">
+                      <h1 className={`text-4xl font-bold ${selectedProductData.accentColor} mb-2`}>
+                        {selectedProductData.name}
+                      </h1>
+                      <p className="text-gray-600 text-lg">
+                        {selectedProductData.title}
                       </p>
                     </div>
-                  ))}
+                  </div>
+
+                  <p className="text-gray-700 text-lg mb-8 leading-relaxed">
+                    {selectedProductData.detailedDescription}
+                  </p>
+
+                  {/* Features */}
+                  <div className="mb-8">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-4">Key Features</h3>
+                    <div className="flex flex-wrap justify-center gap-4">
+                      {selectedProductData.features.map((feature, index) => (
+                        <span 
+                          key={index}
+                          className="px-4 py-2 bg-white rounded-full text-sm font-medium text-gray-700 shadow-md"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Link 
+                    to={selectedProductData.href}
+                    className="inline-flex items-center justify-center px-12 py-4 bg-white text-gray-800 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  >
+                    EXPLORE MORE 
+                    <ArrowRight className="ml-3 w-5 h-5" />
+                  </Link>
                 </div>
               </div>
             </div>
+
+            {/* Side Panel with Other Products */}
+            <div className="w-80 bg-gray-50 border-l border-gray-200 overflow-y-auto p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-6">Other Products</h3>
+              <div className="space-y-4">
+                {otherProducts.map((product) => (
+                  <div 
+                    key={product.id}
+                    className={`${product.bgColor} ${product.borderColor} rounded-2xl p-4 cursor-pointer transition-all duration-300 hover:shadow-md border`}
+                    onClick={() => handleCardClick(product.id)}
+                  >
+                    <div className="flex items-center mb-3">
+                      <div className={`flex items-center justify-center w-8 h-8 rounded-lg bg-white shadow-sm mr-3`}>
+                        {React.createElement(product.icon, { className: `w-4 h-4 ${product.accentColor}` })}
+                      </div>
+                      <span className={`text-sm font-bold ${product.accentColor}`}>{product.name}</span>
+                    </div>
+                    
+                    <h4 className="text-sm font-medium text-gray-800 mb-2 leading-tight">
+                      {product.title}
+                    </h4>
+                    
+                    <p className="text-xs text-gray-600 leading-relaxed">
+                      {product.description.slice(0, 80)}...
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        )}
-      </div>
-    </section>
+        </div>
+      )}
+    </>
   );
 };
 
